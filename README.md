@@ -5,7 +5,7 @@ Clean Book Review
 ├─ controllers
 │  └─ bookReviewController.js
 ├─ entities
-│  └─ bookReview.js
+│  └─ book-review.js
 ├─ frameworks
 │  └─ dbRepository.js
 ├─ index.js
