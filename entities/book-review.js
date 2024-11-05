@@ -4,7 +4,7 @@ import { isValidDate } from "../utility/validation.js";
 export class BookReview {
     constructor(title, author, isbn, genre, rating, readDate, summary, note, review) {
         // construct all neccessary components of a BookReview from the title to the review all variables are 
-        // validated through functions for self validation.
+        // validated through a validation function for contained self validation.
         if(this.validate(title, author, isbn, genre, rating, readDate, summary, note, review)) {
             this.title = title;
             this.author = author;
@@ -64,5 +64,7 @@ export class BookReview {
         // A review needs to be between 100 and 500 characters
         if(!(typeof review === 'string' && review.length >= 100 && review.length <= 500))
             throw new EntityError('Review needs to be of type string and it needs to be between 100 and 500 characters in length.');
+
+        return true;
     }
 }
