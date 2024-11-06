@@ -2,7 +2,7 @@ import { EntityError } from "../utility/error.js";
 import { isValidDate } from "../utility/validation.js";
 
 export class BookReview {
-    constructor({id, title, author, isbn, genre, rating, readDate, summary, note, review, creationDate = new Date()}) {
+    constructor({id, title, author, isbn, genre, rating, readDate, summary, review, note, creationDate = new Date()}) {
         // construct all necessary components of a BookReview from the title to the review all variables are 
         // validated through a validation function for contained self validation.
         if(this.validateTitle(title)) this.title = title;
@@ -12,8 +12,8 @@ export class BookReview {
         if(this.validateRating(rating)) this.rating = rating;
         if(this.validateReadDate(readDate)) this.readDate = readDate;
         if(this.validateSummary(summary)) this.summary = summary;
-        if(this.validateNote(note)) this.note = note;
         if(this.validateReview(review)) this.review = review;
+        if(this.validateNote(note)) this.note = note;
         if(this.validateID(id)) this.id = id;
         if(this.validateCreationDate(creationDate)) this.creationDate = creationDate;
     }
@@ -40,7 +40,7 @@ export class BookReview {
         if(!(typeof author === 'string' && author.length >= 10 && author.length <= 100))
             throw new EntityError('Author needs to be of type string and it needs to be between 10 and 100 characters in length.');
 
-        return;
+        return true;
     }
 
     validateISBN(isbn) {
@@ -115,19 +115,34 @@ export class BookReview {
         return true;
     }
 
+    validateEditedData(newData) {
+        const allowedKeys = ["title", "author", "isbn", "genre", "rating", "readDate", "summary", "note", "review"];
+
+        // Check if all keys in newData are valid
+        if (!Object.keys(newData).every(key => allowedKeys.includes(key)))
+            throw new EntityError("When trying to a Book Review, newData contains invalid fields.");
+
+        return true;
+    }
+    
     setEditDate() {
         this.editedDate = new Date();
     }
+    
+    organizeEditedData(newData) {
+        if(this.validateEditedData(newData))
+            return {
+                ...this,
+                ...newData,
+                id: this.id,
+                creationDate: this.creationDate
+            };
+    }
 
     edit(newData) {
-        const editedBookReview = new BookReview({
-            id: this.id, 
-            creationDate: this.creationDate, 
-            ...newData
-        });
-        
+        const editedBookReview = new BookReview(this.organizeEditedData(newData));
         editedBookReview.setEditDate();
-        
+
         return editedBookReview;
     }
 }
