@@ -3,7 +3,7 @@ import { isValidDate } from "../utility/validation.js";
 
 export class BookReview {
     constructor({id, title, author, isbn, genre, rating, readDate, summary, note, review, creationDate = new Date()}) {
-        // construct all neccessary components of a BookReview from the title to the review all variables are 
+        // construct all necessary components of a BookReview from the title to the review all variables are 
         // validated through a validation function for contained self validation.
         if(this.validateTitle(title)) this.title = title;
         if(this.validateAuthor(author)) this.author = author;
@@ -113,5 +113,21 @@ export class BookReview {
             throw new EntityError('Creation Date needs to be a valid Date object.');
         }
         return true;
+    }
+
+    setEditDate() {
+        this.editedDate = new Date();
+    }
+
+    edit(newData) {
+        const editedBookReview = new BookReview({
+            id: this.id, 
+            creationDate: this.creationDate, 
+            ...newData
+        });
+        
+        editedBookReview.setEditDate();
+        
+        return editedBookReview;
     }
 }
