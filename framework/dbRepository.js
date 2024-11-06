@@ -1,4 +1,3 @@
-
 export const dbRepository = {
     create: async (BookReview) => {
 
@@ -26,5 +25,8 @@ export const dbRepository = {
     },
     random: async (amount) => {
         
+    },
+    query: async (statement, values) => {
+
     }
 }
