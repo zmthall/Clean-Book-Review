@@ -3,10 +3,10 @@ export const dbRepository = {
     create: async (BookReview) => {
 
     },
-    read: async (id) => {
+    get: async (id) => {
 
     },
-    readAll: async () => {
+    getAll: async () => {
 
     },
     update: async (id, newData) => {
@@ -14,5 +14,17 @@ export const dbRepository = {
     },
     delete: async (id) => {
 
+    },
+    filter: async (params) => {
+
+    },
+    find: async (params) => {
+
+    },
+    sort: async (params) => {
+
+    },
+    random: async (amount) => {
+        
     }
 }
