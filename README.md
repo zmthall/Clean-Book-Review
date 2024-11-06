@@ -2,11 +2,11 @@
 ```
 Clean Book Review
 ├─ README.md
-├─ controllers
+├─ controller
 │  └─ bookReviewController.js
-├─ entities
-│  └─ book-review.js
-├─ frameworks
+├─ entity
+│  └─ bookReview.js
+├─ framework
 │  └─ dbRepository.js
 ├─ index.js
 ├─ middleware
@@ -22,17 +22,25 @@ Clean Book Review
 │  │  └─ getBookReview.js
 │  └─ styles
 │     └─ style.css
-├─ routes
+├─ router
 │  └─ bookReviewRouter.js
-├─ use-cases
-│  ├─ createBookReview.js
-│  ├─ deleteBookReview.js
-│  ├─ editBookReview.js
-│  ├─ getAllBookReviews.js
-│  └─ getBookReview.js
+├─ use-case
+│  ├─ book-review
+│  │  ├─ createBookReview.js
+│  │  ├─ deleteBookReview.js
+│  │  ├─ filterBookReviews.js
+│  │  ├─ getAllBookReviews.js
+│  │  ├─ getBookReview.js
+│  │  ├─ getRandomBookReview.js
+│  │  ├─ getRandomBookReviews.js
+│  │  ├─ searchBookReviews.js
+│  │  ├─ sortBookReviews.js
+│  │  └─ updateBookReview.js
+│  └─ index.js
 ├─ utility
 │  ├─ error.js
-│  └─ response.js
+│  ├─ response.js
+│  └─ validation.js
 └─ views
    ├─ book-review.ejs
    ├─ book-reviews.ejs
