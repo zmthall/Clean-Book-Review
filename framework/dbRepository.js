@@ -1,6 +1,6 @@
 
 export const dbRepository = {
-    create: async (review) => {
+    create: async (BookReview) => {
 
     },
     read: async (id) => {
