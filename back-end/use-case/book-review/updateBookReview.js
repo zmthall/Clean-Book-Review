@@ -1,7 +1,7 @@
 import { UseCaseError } from "../../utility/error";
 
 export function makeUpdateBookReview({ dbRepository }) {
-    return async function updateBookReview(id, newData) {
+    return async function updateBookReview({ id, newData }) {
         try {
             const updatedBookReview = await dbRepository.update(id, newData);
             return updatedBookReview;

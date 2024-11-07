@@ -1,6 +1,8 @@
+import { BookReview } from "../entity/bookReview.js"
+
 export const dbRepository = {
     create: async (BookReview) => {
-
+        
     },
     get: async (id) => {
 

@@ -1,7 +1,7 @@
 import { UseCaseError } from "../../utility/error";
 
 export function makeDeleteBookReview({ dbRepository }) {
-    return async function deleteBookReview(id) {
+    return async function deleteBookReview({ id }) {
         try {
             const deletedBookReview = await dbRepository.delete(id);
             return deletedBookReview;
