@@ -1,35 +1,45 @@
+import { create } from "domain";
 import { EntityError } from "../utility/error.js";
 import { isValidDate } from "../utility/validation.js";
 
 export class BookReview {
-    constructor({id, title, author, isbn, genre, rating, readDate, summary, review, note, creationDate = new Date()}) {
+    constructor({id, title, author, isbn, genre, rating, read_date, summary, review, note = null, creation_date = null}) {
         // construct all necessary components of a BookReview from the title to the review all variables are 
         // validated through a validation function for contained self validation.
+
+        if(creation_date === null) {
+            creation_date = new Date();
+            creation_date = creation_date.toLocaleDateString('en-US', {day: '2-digit', month: '2-digit', year: 'numeric'});
+        }
+        if(this.validateID(id)) this.id = id;
         if(this.validateTitle(title)) this.title = title;
         if(this.validateAuthor(author)) this.author = author;
         if(this.validateISBN(isbn)) this.isbn = isbn;
         if(this.validateGenre(genre)) this.genre = genre;
         if(this.validateRating(rating)) this.rating = rating;
-        if(this.validateReadDate(readDate)) this.readDate = readDate;
+        if(this.validateReadDate(creation_date)) this.read_date = read_date;
         if(this.validateSummary(summary)) this.summary = summary;
         if(this.validateReview(review)) this.review = review;
         if(this.validateNote(note)) this.note = note;
-        if(this.validateID(id)) this.id = id;
-        if(this.validateCreationDate(creationDate)) this.creationDate = creationDate;
+        if(this.validateCreationDate(creation_date)) this.creation_date = creation_date;
+
+        // console.log(this.id)
     }
 
     validateID(id) {
         // An id needs to be a number
         // An id cannot be empty
         if(!(typeof id === 'number' && !isNaN(id) && id >= 0))
-            throw new EntityError('ID needs to be of type string, and it must be a positive integer.')
+            throw new EntityError('ID needs to be of type number, and it must be a positive integer.')
+
+        return true;
     }
 
     validateTitle(title) {
         // A title needs to be a string
-        // A title cannot be empty and needs to be between 10 and 250 characters
-        if(!(typeof title === 'string' && title.length >= 10 && title.length <= 250))
-            throw new EntityError('Title needs to be of type string, and it needs to be between 10 and 250 characters in length.'); // specific error thrown
+        // A title cannot be empty and needs to be between 5 and 250 characters
+        if(!(typeof title === 'string' && title.length >= 5 && title.length <= 250))
+            throw new EntityError('Title needs to be of type string, and it needs to be between 5 and 250 characters in length.'); // specific error thrown
 
         return true;
     }
@@ -71,10 +81,10 @@ export class BookReview {
         return true;
     }
 
-    validateReadDate(readDate) {
-        // The readDate needs to be a string
-        // The readDate must be a valide date in format and accurate/real
-        if(!(typeof readDate === 'string' && isValidDate(readDate)))
+    validateReadDate(read_date) {
+        // The read_date needs to be a string
+        // The read_date must be a valide date in format and accurate/real
+        if(!(typeof read_date === 'string' && isValidDate(read_date)))
             throw new EntityError('Date needs to be of type string in MM/DD/YYYY or MM-DD-YYYY format and it needs to be a real date.');
 
         return true;
@@ -83,18 +93,19 @@ export class BookReview {
     validateSummary(summary) {
         // A summary needs to be a string
         // A summary needs to be between 200 and 1000 characters
-        if(!(typeof summary === 'string' && summary.length >= 200 && summary.length <= 1000))
+        if(!(typeof summary === 'string' && summary.length >= 200 && summary.length <= 5000))
             throw new EntityError('Summary needs to be of type string and it needs to be between 200 and 1000 characters in length.');
         
         return true;
     }
 
     validateNote(note) {
+        if(note === null) return true
         // A note needs to be a string
         // A note needs to be betewen 200 and 10000 characters
         if(!(typeof note === 'string' && note.length >= 200 && note.length <= 10000))
             throw new EntityError('Note needs to be of type string and it needs to be between 200 and 10000 characters in length.');
-
+        
         return true;
     }
 
@@ -107,16 +118,16 @@ export class BookReview {
         return true;
     }
 
-    validateCreationDate(creationDate) {
+    validateCreationDate(creation_date) {
         // A Date needs to be a valid date
-        if (!(creationDate instanceof Date && !isNaN(creationDate.getTime()))) {
-            throw new EntityError('Creation Date needs to be a valid Date object.');
+        if (!(typeof creation_date === 'string' && isValidDate(creation_date))) {
+            throw new EntityError('Creation Date needs to be of type string in MM/DD/YYYY or MM-DD-YYYY format and it needs to be a real date.');
         }
         return true;
     }
 
     validateEditedData(newData) {
-        const allowedKeys = ["title", "author", "isbn", "genre", "rating", "readDate", "summary", "note", "review"];
+        const allowedKeys = ["title", "author", "isbn", "genre", "rating", "read_date", "summary", "note", "review"];
 
         // Check if all keys in newData are valid
         if (!Object.keys(newData).every(key => allowedKeys.includes(key)))
@@ -126,7 +137,7 @@ export class BookReview {
     }
     
     setEditDate() {
-        this.editedDate = new Date();
+        this.edited_date = new Date();
     }
     
     organizeEditedData(newData) {
@@ -135,7 +146,7 @@ export class BookReview {
                 ...this,
                 ...newData,
                 id: this.id,
-                creationDate: this.creationDate
+                creation_date: this.creation_date
             };
     }
 
@@ -144,5 +155,26 @@ export class BookReview {
         editedBookReview.setEditDate();
 
         return editedBookReview;
+    }
+
+    get(key) {
+        return this[key];
+    }
+
+    valuesArr() {
+        return [
+            this.id,
+            this.title,
+            this.author,
+            this.isbn,
+            this.genre,
+            this.rating,
+            this.read_date,
+            this.summary,
+            this.review,
+            this.note,
+            this.creation_date,
+            this.edited_date || null
+        ];
     }
 }

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "```\r Clean Book Review\r ├─ README.md\r ├─ controller\r │  └─ bookReviewController.js\r ├─ entity\r │  └─ bookReview.js\r ├─ framework\r │  └─ dbRepository.js\r ├─ index.js\r ├─ middleware\r │  ├─ authentication.js\r │  ├─ error.js\r │  └─ logger.js\r ├─ public\r │  ├─ scripts\r │  │  ├─ createBookReview.js\r │  │  ├─ deleteBookReview.js\r │  │  ├─ editBookReview.js\r │  │  ├─ getAllBookReviews.js\r │  │  └─ getBookReview.js\r │  └─ styles\r │     └─ style.css\r ├─ router\r │  └─ bookReviewRouter.js\r ├─ use-case\r │  ├─ book-review\r │  │  ├─ createBookReview.js\r │  │  ├─ deleteBookReview.js\r │  │  ├─ filterBookReviews.js\r │  │  ├─ getAllBookReviews.js\r │  │  ├─ getBookReview.js\r │  │  ├─ getRandomBookReview.js\r │  │  ├─ getRandomBookReviews.js\r │  │  ├─ searchBookReviews.js\r │  │  ├─ sortBookReviews.js\r │  │  └─ updateBookReview.js\r │  └─ index.js\r ├─ utility\r │  ├─ error.js\r │  ├─ response.js\r │  └─ validation.js\r └─ views\r    ├─ book-review.ejs\r    ├─ book-reviews.ejs\r    ├─ index.ejs\r    ├─ layouts\r    │  └─ main-layout.ejs\r    ├─ not-found-error.ejs\r    ├─ partials\r    │  ├─ create-book-review.ejs\r    │  └─ edit-book-review.ejs\r    └─ server-error.ejs",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

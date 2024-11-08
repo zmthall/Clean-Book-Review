@@ -16,3 +16,13 @@ export class UseCaseError extends Error {
         this.stack = error ? error.stack : null;
     }
 }
+
+export class RepositoryError extends Error {
+    constructor({message, error, status = 500}) {
+        super(message);
+        this.errorType = 'RepositoryError';
+        this.status = status;
+        this.error = error ? error.message : null;
+        this.stack = error ? error.stack : null;
+    }
+}
