@@ -1,16 +1,10 @@
-import { create } from "domain";
 import { EntityError } from "../utility/error.js";
 import { isValidDate } from "../utility/validation.js";
 
 export class BookReview {
-    constructor({id, title, author, isbn, genre, rating, read_date, summary, review, note = null, creation_date = null}) {
+    constructor({id, title, author, isbn, genre, rating, read_date, summary, review, note = null, creation_date = new Date()}) {
         // construct all necessary components of a BookReview from the title to the review all variables are 
         // validated through a validation function for contained self validation.
-
-        if(creation_date === null) {
-            creation_date = new Date();
-            creation_date = creation_date.toLocaleDateString('en-US', {day: '2-digit', month: '2-digit', year: 'numeric'});
-        }
         if(this.validateID(id)) this.id = id;
         if(this.validateTitle(title)) this.title = title;
         if(this.validateAuthor(author)) this.author = author;
@@ -21,9 +15,7 @@ export class BookReview {
         if(this.validateSummary(summary)) this.summary = summary;
         if(this.validateReview(review)) this.review = review;
         if(this.validateNote(note)) this.note = note;
-        if(this.validateCreationDate(creation_date)) this.creation_date = creation_date;
-
-        // console.log(this.id)
+        if(this.validateCreationDate(creation_date)) this.creation_date = this.formatDate(creation_date);
     }
 
     validateID(id) {
@@ -120,8 +112,8 @@ export class BookReview {
 
     validateCreationDate(creation_date) {
         // A Date needs to be a valid date
-        if (!(typeof creation_date === 'string' && isValidDate(creation_date))) {
-            throw new EntityError('Creation Date needs to be of type string in MM/DD/YYYY or MM-DD-YYYY format and it needs to be a real date.');
+        if (!(typeof creation_date === 'string' )) {
+            throw new EntityError('Creation Date needs to be of type string in YYYY-MM-DDT00:00:00.000Z"');
         }
         return true;
     }
@@ -135,11 +127,15 @@ export class BookReview {
 
         return true;
     }
-    
-    setEditDate() {
-        this.edited_date = new Date();
+
+    formatDate(date = new Date()) {
+        if(typeof date === 'string')
+            date = new Date(date);    
+        return date.toISOString(); // Or customize to 'MM/DD/YYYY' or 'MM-DD-YYYY'
     }
     
+    // used by the edit function to make sure that all items stay consistant and unaltered other than the items
+    // that need to be altered.
     organizeEditedData(newData) {
         if(this.validateEditedData(newData))
             return {
@@ -150,17 +146,20 @@ export class BookReview {
             };
     }
 
+    // Used to update a Book Review
     edit(newData) {
         const editedBookReview = new BookReview(this.organizeEditedData(newData));
-        editedBookReview.setEditDate();
+        editedBookReview.edited_date = this.formatDate();
 
         return editedBookReview;
     }
 
+    // get internal components of a book review.
     get(key) {
         return this[key];
     }
 
+    // this function is utilized when sending the information inside the book review to the databse
     valuesArr() {
         return [
             this.id,
