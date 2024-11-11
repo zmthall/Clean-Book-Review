@@ -3,6 +3,7 @@ import { RepositoryError } from "./back-end/utility/error.js";
 import { handleQueryResponse, handleRepoReponse } from "./back-end/utility/response.js";
 import postgreSQL from 'pg';
 import 'dotenv/config';
+import { nanoid } from "nanoid";
 
 const dbCnnection = {
     user: process.env.DATABASE_USERNAME,
@@ -59,7 +60,7 @@ export const dbRepository = {
         const dbQueryResult = await dbRepository.query('DELETE FROM bookreview WHERE id = $1 RETURNING *', [id])
         return dbQueryResult;
     }),
-    random: async (amount) => handleRepoReponse(async () => {
+    random: async (amount = 1) => handleRepoReponse(async () => {
         const dbQueryResult = await query(`SELECT * FROM bookreview ORDER BY RANDOM() LIMIT $1;`, [amount]);
         return dbQueryResult;
     }),
@@ -94,7 +95,6 @@ export const dbRepository = {
 }
 
 const data = {
-    id: 12345,
     title: 'Lock Every Door: A Novel',
     author: 'Riley Sager',
     isbn: '978-1432866679',
@@ -110,14 +110,12 @@ Searching for the truth about Ingrid's disappearance, Jules digs deeper into the
     review: `This book kept me on my toes the entire time. I was really involved with all of the characters and it really got me engaged. I was really eager to see how everything turned out. I read this book until it was dont and then still wanted to read it more. I wanted to know what happened to the characters after the fact. I haven't been able to stop thinking about this book since I read it.`, 
 }
 
-const bookReview = new BookReview(data);
-
 async function testing() {
     const test = {
         summary: 'test'
     }
     try {
-        console.log(await dbRepository.create(bookReview));
+        console.log(await dbRepository.create(data));
     } catch (error) {
         console.error(error.message)
     }

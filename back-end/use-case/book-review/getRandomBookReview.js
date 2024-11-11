@@ -3,7 +3,7 @@ import { UseCaseError } from "../../utility/error.js";
 export function makeGetRandomBookReview({ dbRepository }) {
     return async function getRandomBookReview() {
         try {
-            const randomBookReview = await dbRepository.random(1);
+            const randomBookReview = await dbRepository.random();
             return randomBookReview;
         } catch (error) {
             throw new UseCaseError({

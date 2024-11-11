@@ -1,9 +1,16 @@
 import { UseCaseError } from "../../utility/error.js";
+import { nanoid } from "nanoid";
+
 
 export function makeCreateBookReview({ dbRepository }) {
-    return async function createBookReview(newBookReview) {
+    return async function createBookReview(bookReviewData) {
+        bookReviewData.read_date = (new Date(bookReviewData.read_date)).toISOString()
+        bookReviewData = {
+            id: nanoid(),
+            ...bookReviewData,
+        };
         try {
-            const createdReview = await dbRepository.create(newBookReview);
+            const createdReview = await dbRepository.create(bookReviewData);
             return createdReview;
         } catch (error) {
             throw new UseCaseError({

@@ -6,7 +6,7 @@ export async function handleControllerResponse(controllerFunc, req, res) {
         const result = await controllerFunc(req);
         res.status(result.status || 200).json(result);
     } catch (error) {
-        console.error(error.message);
+        console.error(error);
         res.status(error.status || 500).json({ success: false, data: error.message });
     }
 }
@@ -14,7 +14,6 @@ export async function handleControllerResponse(controllerFunc, req, res) {
 export async function handleQueryResponse(queryFunc, statement, valuesArr) {
     try {
         const result = await queryFunc(statement, valuesArr);
-
         if(result) {
             if(Array.isArray(result)) {
                 try {
@@ -31,7 +30,7 @@ export async function handleQueryResponse(queryFunc, statement, valuesArr) {
             }
         } else throw new RepositoryError('Failed to return query response BookReview.');
     } catch (error) {
-        console.error(error.message)
+        console.error(error)
         throw new RepositoryError({
             message: 'Failed to query from database.', 
             status: error.status || 500,
@@ -45,7 +44,7 @@ export async function handleRepoReponse(repoFunc) {
         const result = await repoFunc();
         return {success: true, status: 200, data: result};
     } catch (error) {
-        console.error(error.message);
+        console.error(error);
         throw new RepositoryError({
             message: 'Failed to return dbQueryResult in repository response.', 
             status: error.status || 500,

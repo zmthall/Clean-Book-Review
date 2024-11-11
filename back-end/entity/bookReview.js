@@ -1,3 +1,4 @@
+import { read } from "fs";
 import { EntityError } from "../utility/error.js";
 import { isValidDate } from "../utility/validation.js";
 
@@ -11,18 +12,18 @@ export class BookReview {
         if(this.validateISBN(isbn)) this.isbn = isbn;
         if(this.validateGenre(genre)) this.genre = genre;
         if(this.validateRating(rating)) this.rating = rating;
-        if(this.validateReadDate(creation_date)) this.read_date = read_date;
+        if(this.validateReadDate(read_date)) this.read_date = read_date;
         if(this.validateSummary(summary)) this.summary = summary;
         if(this.validateReview(review)) this.review = review;
         if(this.validateNote(note)) this.note = note;
-        if(this.validateCreationDate(creation_date)) this.creation_date = this.formatDate(creation_date);
+        if(this.validateCreationDate(creation_date.toISOString())) this.creation_date = this.formatDate(creation_date);
     }
 
     validateID(id) {
-        // An id needs to be a number
-        // An id cannot be empty
-        if(!(typeof id === 'number' && !isNaN(id) && id >= 0))
-            throw new EntityError('ID needs to be of type number, and it must be a positive integer.')
+        // An id needs to be a string
+        // An id cannot be empty/undefined
+        if(!(typeof id === 'string' && id.length != 0))
+            throw new EntityError('ID needs to be of type string, and it must not be empty or undefined.')
 
         return true;
     }
@@ -77,7 +78,7 @@ export class BookReview {
         // The read_date needs to be a string
         // The read_date must be a valide date in format and accurate/real
         if(!(typeof read_date === 'string' && isValidDate(read_date)))
-            throw new EntityError('Date needs to be of type string in MM/DD/YYYY or MM-DD-YYYY format and it needs to be a real date.');
+            throw new EntityError('Read Date needs to be of type string in YYYY-MM-DD:{hours}:{minutes}:{seconds}:{milliseconds}Z format and it needs to be a real date.');
 
         return true;
     }
@@ -113,7 +114,7 @@ export class BookReview {
     validateCreationDate(creation_date) {
         // A Date needs to be a valid date
         if (!(typeof creation_date === 'string' )) {
-            throw new EntityError('Creation Date needs to be of type string in YYYY-MM-DDT00:00:00.000Z"');
+            throw new EntityError('Creation Date needs to be of type string in YYYY-MM-DD:{hours}:{minutes}:{seconds}:{milliseconds}Z format and it needs to be a real date.');
         }
         return true;
     }

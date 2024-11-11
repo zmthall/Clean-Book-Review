@@ -1,5 +1,4 @@
 import { BookReview } from "../../entity/bookReview.js";
-import { RepositoryError } from "../../utility/error.js";
 import { handleQueryResponse, handleRepoReponse } from "../../utility/response.js";
 import postgreSQL from 'pg';
 import 'dotenv/config';
@@ -15,18 +14,13 @@ const dbCnnection = {
 
 export const dbRepository = {
     COLUMN_NAMES_STR: 'title,author,isbn,genre,rating,read_date,summary,review,note',
-    create: async (bookReview) => handleRepoReponse(async () => {
-        if(bookReview instanceof BookReview) {
-            const dbQueryResult = await dbRepository.query(
-                'INSERT INTO bookreview VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *',
-                bookReview.valuesArr() // an array of values that fills in the db query values
-            );
-            return dbQueryResult;
-        } else {
-            throw new RepositoryError({
-                message: 'Invalid bookReview instance as argument of dbRepository.create().'
-            });
-        }
+    create: async (bookReviewData) => handleRepoReponse(async () => {
+        const newBookReview = new BookReview(bookReviewData);
+        const dbQueryResult = await dbRepository.query(
+            'INSERT INTO bookreview VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *',
+            newBookReview.valuesArr() // an array of values that fills in the db query values
+        );
+        return dbQueryResult;
     }),
     get: async (id) => handleRepoReponse(async () => {
         const dbQueryResult = await dbRepository.query('SELECT * FROM bookreview WHERE id = $1', [id]);
@@ -59,8 +53,8 @@ export const dbRepository = {
         const dbQueryResult = await dbRepository.query('DELETE FROM bookreview WHERE id = $1 RETURNING *', [id])
         return dbQueryResult;
     }),
-    random: async (amount) => handleRepoReponse(async () => {
-        const dbQueryResult = await query(`SELECT * FROM bookreview ORDER BY RANDOM() LIMIT $1;`, [amount]);
+    random: async (amount = 1) => handleRepoReponse(async () => {
+        const dbQueryResult = await dbRepository.query(`SELECT * FROM bookreview ORDER BY RANDOM() LIMIT $1;`, [amount]);
         return dbQueryResult;
     }),
     filter: async (params) => {

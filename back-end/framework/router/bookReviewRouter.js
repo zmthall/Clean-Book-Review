@@ -16,8 +16,8 @@ const useCases = {
     createBookReview: makeUseCase.makeCreateBookReview({ dbRepository }),
     getAllBookReviews: makeUseCase.makeGetAllBookReviews({ dbRepository }),
     getBookReview: makeUseCase.makeGetBookReview({ dbRepository }),
-    getRandomBookReivew: makeUseCase.makeGetRandomBookReview({ dbRepository }),
-    getRandomBookReivews: makeUseCase.makeGetRandomBookReviews({ dbRepository }),
+    getRandomBookReview: makeUseCase.makeGetRandomBookReview({ dbRepository }),
+    getRandomBookReviews: makeUseCase.makeGetRandomBookReviews({ dbRepository }),
     updateBookReview: makeUseCase.makeUpdateBookReview({ dbRepository }),
     deleteBookReview: makeUseCase.makeDeleteBookReview({ dbRepository }),
     filterBookReviews: makeUseCase.makeFilterBookReviews({ dbRepository }),
@@ -34,10 +34,10 @@ const bookReviewController = makeBookReviewController(useCases);
 const router = express.Router();
 
 router.post('/', bookReviewController.createBookReview);
-router.get('/:id', bookReviewController.getBookReview);
-router.get('/', bookReviewController.getAllBookReviews);
+router.get('/review/:id', bookReviewController.getBookReview);
+router.get('/reviews', bookReviewController.getAllBookReviews);
 router.get('/random', bookReviewController.getRandomBookReview);
-router.put('/random/:quantity', bookReviewController.getRandomBookReivews);
+router.get('/random/:quantity', bookReviewController.getRandomBookReviews);
 router.put('/:id', bookReviewController.updateBookReview);
 router.delete('/id', bookReviewController.deleteBookReview);
 router.get('/filter', bookReviewController.filterBookReviews);
