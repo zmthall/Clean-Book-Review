@@ -38,7 +38,7 @@ router.get('/', authenticate, bookReviewController.getAllBookReviews);
 router.get('/random', authenticate, bookReviewController.getRandomBookReview);
 router.get('/random/:quantity', authenticate, bookReviewController.getRandomBookReviews);
 router.put('/:id', authenticate, bookReviewController.updateBookReview);
-router.delete('/id', authenticate, bookReviewController.deleteBookReview);
+router.delete('/:id', authenticate, bookReviewController.deleteBookReview);
 router.get('/filter', authenticate, bookReviewController.filterBookReviews);
 router.get('/sort', authenticate, bookReviewController.sortBookReviews);
 router.get('/search', authenticate, bookReviewController.searchBookReviews);
