@@ -1,6 +1,6 @@
-import { handleControllerResponse } from "../utility/response"
+import { handleControllerResponse } from "../utility/response.js";
 
-export function makeBookReviewController({ createBookReview, getAllBookReviews, getBookReview, getRandomBookReviews, getRandomBookReivew, updateBookReview, deleteBookReview, filterBookReviews, sortBookReviews, searchBookReviews }) {
+export function makeBookReviewController({ createBookReview, getAllBookReviews, getBookReview, getRandomBookReviews, getRandomBookReview, updateBookReview, deleteBookReview, filterBookReviews, sortBookReviews, searchBookReviews }) {
     return {
         createBookReview: async (req, res) => handleControllerResponse(async (req) => {
             return await createBookReview(req.body);
@@ -15,7 +15,7 @@ export function makeBookReviewController({ createBookReview, getAllBookReviews, 
             return await getRandomBookReviews();
         },req, res),
         getRandomBookReview: async (req, res) => handleControllerResponse(async (req) => {
-            return await getRandomBookReivew();
+            return await getRandomBookReview();
         },req, res),
         updateBookReview: async (req, res) => handleControllerResponse(async (req) => {
             return await updateBookReview(req.params);

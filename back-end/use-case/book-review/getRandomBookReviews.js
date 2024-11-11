@@ -1,4 +1,4 @@
-import { UseCaseError } from "../../utility/error";
+import { UseCaseError } from "../../utility/error.js";
 
 export function makeGetRandomBookReviews({ dbRepository }) {
     return async function getRandomBookReviews(amount = 5) {

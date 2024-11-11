@@ -1,6 +1,6 @@
-import { BookReview } from "./back-end/entity/bookReview.js";
-import { RepositoryError } from "./back-end/utility/error.js";
-import { handleQueryResponse, handleRepoReponse } from "./back-end/utility/response.js";
+import { BookReview } from "../../entity/bookReview.js";
+import { RepositoryError } from "../../utility/error.js";
+import { handleQueryResponse, handleRepoReponse } from "../../utility/response.js";
 import postgreSQL from 'pg';
 import 'dotenv/config';
 

@@ -1,4 +1,4 @@
-import { UseCaseError } from "../../utility/error";
+import { UseCaseError } from "../../utility/error.js";
 
 export function makeFilterBookReviews({ dbRepository }) {
     return async function filterBookReviews(params) {
