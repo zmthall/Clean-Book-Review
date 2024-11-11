@@ -2,8 +2,8 @@ import express from 'express';
 
 const router = express.Router();
 
-router.get('*', (req, res) => {
-    res.json({ error: '404 Page not Found.', status: 404 });
-})
+router.all('*', (req, res) => {
+    res.json({ success: false, status: 404, error: 'Route not found.' });
+});
 
 export default router;
