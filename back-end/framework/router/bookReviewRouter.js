@@ -1,11 +1,5 @@
 import express from 'express';
 
-// middleware imports
-import { authenticate } from '../middleware/authentication.js';
-import { errorHandler } from '../middleware/error.js';
-import { errorLogger } from '../middleware/logger.js';
-import { eventLogger } from '../middleware/logger.js';
-
 // dbRepository import (infrastructure layer)
 import { dbRepository } from '../repository/dbRepository.js';
 
@@ -32,6 +26,15 @@ const bookReviewController = makeBookReviewController(useCases);
 
 
 const router = express.Router();
+
+// middleware imports
+import { authenticate } from '../middleware/authentication.js';
+import { errorHandler } from '../middleware/error.js';
+import { errorLogger } from '../middleware/logger.js';
+import { eventLogger } from '../middleware/logger.js';
+
+router.use(authenticate);
+router.use(errorHandler);
 
 router.post('/', bookReviewController.createBookReview);
 router.get('/review/:id', bookReviewController.getBookReview);

@@ -17,6 +17,16 @@ export class UseCaseError extends Error {
     }
 }
 
+export class ControllerError extends Error {
+    constructor({message, error, status = 403}) {
+        super(message);
+        this.errorType = 'ControllerError';
+        this.status = status;
+        this.error = error ? error.message : null;
+        this.stack = error ? error.stack : null;
+    }
+}
+
 export class RepositoryError extends Error {
     constructor({message, error, status = 500}) {
         super(message);
