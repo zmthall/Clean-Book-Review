@@ -4,12 +4,6 @@ import express from 'express';
 import bookReviewRouter from './router/bookReviewRouter.js'
 import generalRouter from './router/generalRouter.js'
 
-// middleware imports
-import { authenticate } from './middleware/authentication.js';
-import { errorHandler } from './middleware/error.js';
-import { errorLogger } from './middleware/logger.js';
-import { eventLogger } from './middleware/logger.js';
-
 const app = express();
 let server;
 

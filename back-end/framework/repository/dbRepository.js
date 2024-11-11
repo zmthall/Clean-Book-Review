@@ -19,7 +19,7 @@ export const dbRepository = {
         if(bookReview instanceof BookReview) {
             const dbQueryResult = await dbRepository.query(
                 'INSERT INTO bookreview VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *',
-                bookReview.valuesArr() // an array of values that fills in the 
+                bookReview.valuesArr() // an array of values that fills in the db query values
             );
             return dbQueryResult;
         } else {

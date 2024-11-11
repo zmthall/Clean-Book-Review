@@ -12,8 +12,4 @@ router.get('/', (req, res) => {
     res.json({ this: 'happened' });
 });
 
-router.get('*', (req, res) => {
-    res.json({ error: '404 Page not Found.', status: 404 });
-})
-
 export default router;
