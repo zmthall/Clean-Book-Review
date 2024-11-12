@@ -15,7 +15,7 @@ export function makeBookReviewController({ createBookReview, getAllBookReviews, 
             return await getRandomBookReview();
         },req, res),
         getRandomBookReviews: async (req, res) => handleControllerResponse(async (req) => {
-            return await getRandomBookReviews();
+            return await getRandomBookReviews(req.params);
         },req, res),
         updateBookReview: async (req, res) => handleControllerResponse(async (req) => {
             return await updateBookReview(req.params);
@@ -30,7 +30,7 @@ export function makeBookReviewController({ createBookReview, getAllBookReviews, 
             return await sortBookReviews(req.params);
         },req, res),
         searchBookReviews: async (req, res) => handleControllerResponse(async (req) => {
-            return await sortBookReviews(req.params);
+            return await searchBookReviews(req.params);
         },req, res)
     }
 }

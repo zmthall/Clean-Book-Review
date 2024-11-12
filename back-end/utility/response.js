@@ -11,7 +11,7 @@ export async function handleControllerResponse(controllerFunc, req, res) {
     }
 }
 
-export async function handleQueryResponse(queryFunc, statement, valuesArr) {
+export async function handleQueryResponse(queryFunc, statement, valuesArr = []) {
     try {
         const result = await queryFunc(statement, valuesArr);
         if(result) {

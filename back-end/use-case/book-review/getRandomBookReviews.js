@@ -1,9 +1,9 @@
 import { UseCaseError } from "../../utility/error.js";
 
 export function makeGetRandomBookReviews({ dbRepository }) {
-    return async function getRandomBookReviews(amount = 5) {
+    return async function getRandomBookReviews({quantity = 5}) {
         try {
-            const randomBookReviews = await dbRepository.random(amount);
+            const randomBookReviews = await dbRepository.random(parseInt(quantity));
             return randomBookReviews;
         } catch (error) {
             throw new UseCaseError({

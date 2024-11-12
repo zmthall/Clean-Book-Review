@@ -1,7 +1,7 @@
 import { ControllerError } from "../../utility/error.js";
 import 'dotenv/config';
 
-export function authenticate(req, next) {
+export function authenticate(req, res, next) {
     const { api_key } = req.headers;
     if(api_key && api_key === process.env.API_KEY) {
         return next();

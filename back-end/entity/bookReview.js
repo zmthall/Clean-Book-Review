@@ -1,9 +1,8 @@
-import { read } from "fs";
 import { EntityError } from "../utility/error.js";
 import { isValidDate } from "../utility/validation.js";
 
 export class BookReview {
-    constructor({id, title, author, isbn, genre, rating, read_date, summary, review, note = null, creation_date = new Date()}) {
+    constructor({ id, title, author, isbn, genre, rating, read_date, summary, review, note = null, creation_date = new Date() }) {
         // construct all necessary components of a BookReview from the title to the review all variables are 
         // validated through a validation function for contained self validation.
         if(this.validateID(id)) this.id = id;

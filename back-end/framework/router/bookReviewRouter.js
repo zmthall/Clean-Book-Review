@@ -33,12 +33,12 @@ import { errorLogger } from '../middleware/logger.js';
 import { eventLogger } from '../middleware/logger.js';
 
 router.post('/', authenticate, bookReviewController.createBookReview);
-router.get('/:id', authenticate, bookReviewController.getBookReview);
-router.get('/', authenticate, bookReviewController.getAllBookReviews);
+router.get('/post/:id', authenticate, bookReviewController.getBookReview);
+router.get('/posts', authenticate, bookReviewController.getAllBookReviews);
 router.get('/random', authenticate, bookReviewController.getRandomBookReview);
 router.get('/random/:quantity', authenticate, bookReviewController.getRandomBookReviews);
-router.put('/:id', authenticate, bookReviewController.updateBookReview);
-router.delete('/:id', authenticate, bookReviewController.deleteBookReview);
+router.put('/post/:id', authenticate, bookReviewController.updateBookReview);
+router.delete('/post/:id', authenticate, bookReviewController.deleteBookReview);
 router.get('/filter', authenticate, bookReviewController.filterBookReviews);
 router.get('/sort', authenticate, bookReviewController.sortBookReviews);
 router.get('/search', authenticate, bookReviewController.searchBookReviews);

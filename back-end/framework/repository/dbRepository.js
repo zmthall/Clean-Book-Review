@@ -9,7 +9,6 @@ const dbCnnection = {
     database: process.env.DATABASE_NAME,
     host: process.env.DATABASE_HOST,
     port: process.env.DATABASE_PORT
-
 };
 
 export const dbRepository = {
@@ -53,8 +52,8 @@ export const dbRepository = {
         const dbQueryResult = await dbRepository.query('DELETE FROM bookreview WHERE id = $1 RETURNING *', [id])
         return dbQueryResult;
     }),
-    random: async (amount = 1) => handleRepoReponse(async () => {
-        const dbQueryResult = await dbRepository.query(`SELECT * FROM bookreview ORDER BY RANDOM() LIMIT $1;`, [amount]);
+    random: async () => handleRepoReponse(async () => {
+        const dbQueryResult = await dbRepository.query(`SELECT * FROM bookreview ORDER BY RANDOM() LIMIT 1`);
         return dbQueryResult;
     }),
     filter: async (params) => {
@@ -76,7 +75,6 @@ export const dbRepository = {
         const client = new postgreSQL.Client(dbCnnection);
         await client.connect();
         const result = await client.query(statement, valuesArr);
-
         let resultData;
         if(result.rows.length > 1) resultData = result.rows; 
         else if(result.rows.length === 1) resultData = result.rows[0];
