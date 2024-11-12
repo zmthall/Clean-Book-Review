@@ -33,6 +33,7 @@ export const dbRepository = {
         if(newData instanceof Object) {
             if(Object.keys(newData).every(key => dbRepository.COLUMN_NAMES_STR.includes(key))) {
                 const bookReview = (await dbRepository.get(id)).data;
+                console.log(bookReview)
                 const editedBookReview = bookReview.edit(newData);
                 const setSTR = [];
                 for(const idx in newData) {

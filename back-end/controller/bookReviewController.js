@@ -18,7 +18,7 @@ export function makeBookReviewController({ createBookReview, getAllBookReviews, 
             return await getRandomBookReviews(req.params);
         },req, res),
         updateBookReview: async (req, res) => handleControllerResponse(async (req) => {
-            return await updateBookReview(req.params);
+            return await updateBookReview(req.params, { newData: req.body });
         },req, res),
         deleteBookReview: async (req, res) => handleControllerResponse(async (req) => {
             return await deleteBookReview(req.pararms);

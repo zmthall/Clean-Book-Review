@@ -5,6 +5,8 @@ export class BookReview {
     constructor({ id, title, author, isbn, genre, rating, read_date, summary, review, note = null, creation_date = new Date() }) {
         // construct all necessary components of a BookReview from the title to the review all variables are 
         // validated through a validation function for contained self validation.
+        creation_date = new Date(creation_date); // creation date needs to be an instance of Date
+
         if(this.validateID(id)) this.id = id;
         if(this.validateTitle(title)) this.title = title;
         if(this.validateAuthor(author)) this.author = author;

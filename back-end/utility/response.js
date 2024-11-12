@@ -18,14 +18,22 @@ export async function handleQueryResponse(queryFunc, statement, valuesArr = []) 
             if(Array.isArray(result)) {
                 try {
                     return result.map(rawBookReview => new BookReview(rawBookReview));
-                } catch {
-                    return result;
+                } catch (error) {
+                    throw new RepositoryError({
+                        message: 'Failed to convert query results into a BookReview.',
+                        status: error.status || 500,
+                        error
+                    });
                 } 
             } else {
                 try {
                     return new BookReview(result);
-                } catch {
-                    return result;
+                } catch (error) {
+                    throw new RepositoryError({
+                        message: 'Failed to convert query result into a BookReview.',
+                        status: error.status || 500,
+                        error
+                    })
                 }
             }
         } else throw new RepositoryError('Failed to return query response BookReview.');
